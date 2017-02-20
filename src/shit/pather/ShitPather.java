@@ -7,6 +7,7 @@ public class ShitPather {
     public static void main(String[] args) {
     System.out.println("ShitPather started");
 //Code goes here!
+    PathProgram pathProgram = new PathProgram();
     }
 
 }
