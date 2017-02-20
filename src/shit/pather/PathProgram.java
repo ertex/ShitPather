@@ -1,5 +1,6 @@
 package shit.pather;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ public class PathProgram {
     }
 
     public void CreateAndShowGui() {
-        xSize = map.getPathObjectSize() * map.getMapSize();
+        xSize = map.getPathObjectSize() * map.getMapSize() + 100;
         ySize = map.getPathObjectSize() * map.getMapSize();
         JFrame frame = new JFrame("Shit Pather");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,13 +36,16 @@ public class PathProgram {
         frame.setVisible(true);
         frame.setSize(xSize, ySize);
 
-        guiPanel.setSize(100,ySize);
+        guiPanel = new JPanel();
+        guiPanel.setSize(100, ySize);
+        frame.add(guiPanel, BorderLayout.WEST);
 
         button = new JButton("Start"); // the button for high attacks
         button.setVisible(true);
         button.setText("Start");
         button.addActionListener(actionHandler);
-
+        guiPanel.add(button);
+        frame.pack();
     }
 
     public void draw(Graphics g) {
@@ -52,9 +56,7 @@ public class PathProgram {
 
     }
 
-
-
- private class ActionHandler implements ActionListener//this listens if a action is performed and exceutes the linked action 
+    private class ActionHandler implements ActionListener//this listens if a action is performed and exceutes the linked action 
     {
 
         public void actionPerformed(ActionEvent e) {
@@ -63,10 +65,10 @@ public class PathProgram {
 
                 String cmd = e.getActionCommand();
                 switch (cmd) {
-                    case "start":
-                        
+                    case "Start":
+                        System.out.println("This is a debug message");
                         break;
-                  
+
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
