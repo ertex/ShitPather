@@ -57,8 +57,8 @@ public class Map {
                 }
             }
         }
-        if (!foundExit) {
-            updatePathing();
+        if (!foundExit) {//will repeat until exit is found
+            updatePathing();//calls itself 
         } else {
             createExitPath(exitObject);
         }
