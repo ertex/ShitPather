@@ -26,6 +26,10 @@ public class PathObject {
     public void draw(Graphics g) {
 
     }
+    
+    public byte getlenght(){
+    return lenght;
+    }
 
     public boolean getActive() {
         return active;

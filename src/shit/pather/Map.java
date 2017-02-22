@@ -57,11 +57,10 @@ public class Map {
                 }
             }
         }
-        if(!foundExit){
-        updatePathing();
-        }
-        else{
-        createExitPath(exitObject);
+        if (!foundExit) {
+            updatePathing();
+        } else {
+            createExitPath(exitObject);
         }
     }
 
@@ -78,7 +77,34 @@ public class Map {
     }
 
     public void createExitPath(PathObject exit) {
-        
+        if (foundExit) { //security so it can oly be accesible when the exit has been found
+            PathObject o = exit;
+            x = exit.getX();
+            y = exit.getY();
+            while (o.getlenght() > 0) {
+                x = o.getX();
+                y = o.getY();
+                if (map[x + 1][y].getlenght() < 0) {//checks if any of the nearby pathobjects are closer to the origin, if so, saves the location ...
+                    //of the object so It can be displayed as a path later on, also saves the object into "o" so it ccan check whst is closer around itself
+                    o = map[x + 1][y];
+                    exitPath[o.getLenght()][0] = (byte) x;
+                    exitPath[o.getLenght()][1] = (byte) y;
+                } else if (map[x - 1][y].getlenght() < 0) {
+                    o = map[x - 1][y];
+                    exitPath[o.getLenght()][0] = (byte) x;
+                    exitPath[o.getLenght()][1] = (byte) y;
+                } else if (map[x][y + 1].getlenght() < 0) {
+                    o = map[x][y + 1];
+                    exitPath[o.getLenght()][0] = (byte) x;
+                    exitPath[o.getLenght()][1] = (byte) y;
+                } else if (map[x][y - 1].getlenght() < 0) {
+                    o = map[x][y - 1];
+                    exitPath[o.getLenght()][0] = (byte) x;
+                    exitPath[o.getLenght()][1] = (byte) y;
+                }
+            }
+
+        }
     }
 
     public int getPathObjectSize() {
