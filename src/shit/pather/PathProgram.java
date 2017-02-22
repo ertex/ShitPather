@@ -2,6 +2,7 @@ package shit.pather;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,30 +25,34 @@ public class PathProgram {
     public PathProgram() {
         map = new Map(); //This needs to be before CreateAndShowGui(), since it's using methods from it to make the window
         CreateAndShowGui();
+        run();
     }
 
     public void CreateAndShowGui() {
         xSize = PathObjectSize * map.getMapSize() + 100;
         ySize = PathObjectSize * map.getMapSize();
+        System.out.println(xSize);
         JFrame frame = new JFrame("Shit Pather");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         canvas = new Canvas();
         canvas.setSize(xSize, ySize);
         canvas.setVisible(true);
+        canvas.setBackground(Color.blue);
+       
         frame.setVisible(true);
-        frame.setSize(xSize, ySize);
+        frame.setSize(xSize+100, ySize+100);
 
         guiPanel = new JPanel();
         guiPanel.setSize(100, ySize);
         frame.add(guiPanel, BorderLayout.WEST);
+        frame.add(canvas,BorderLayout.EAST);
 
         button = new JButton("Start"); // the button for high attacks
         button.setVisible(true);
         button.setText("Start");
         button.addActionListener(actionHandler);
         guiPanel.add(button);
-        
-        frame.pack();
+       
     }
 
     public void draw(Graphics g) {
@@ -57,6 +62,7 @@ public class PathProgram {
     public void run() {
         while(true){
         map.draw(canvas.getGraphics());
+
         
         }
 

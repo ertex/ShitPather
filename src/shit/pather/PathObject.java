@@ -16,6 +16,7 @@ public class PathObject {
         this.y = y;
         this.type = type;
         this.lenght = lenght;
+        active = true;
         updateColor();
 
     }

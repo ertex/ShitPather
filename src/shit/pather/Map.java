@@ -18,15 +18,19 @@ public class Map {
     public Map() {
         mapSize = 20;
         map = new PathObject[mapSize][mapSize];
+        map[5][5] = new PathObject((byte)5, (byte)5, (byte) 0, (byte) 0);
+        map[10][10] = new PathObject((byte)10, (byte)10, (byte) 3, (byte) 5);
     }
 
     public void draw(Graphics g) {
-  for (byte x = 0; x < mapSize; x++) {
+        for (byte x = 0; x < mapSize; x++) {
             for (byte y = 0; y < mapSize; y++) {
-                map[x][y].draw(g);
+                if (map[x][y] != null) {
+                    map[x][y].draw(g);
+                }
             }
-  }
-            
+        }
+
     }
 
     public void updatePathing() {
