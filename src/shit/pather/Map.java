@@ -10,7 +10,7 @@ public class Map {
     private PathObject map[][];
     //  private ArrayList<PathObject> Pathers;
     private int x, y, width, height;
-    private final int PathObjectSize = 20;
+
     private boolean foundExit;
     private byte exitPath[][];
     private PathObject exitObject;
@@ -21,7 +21,12 @@ public class Map {
     }
 
     public void draw(Graphics g) {
-
+  for (byte x = 0; x < mapSize; x++) {
+            for (byte y = 0; y < mapSize; y++) {
+                map[x][y].draw(g);
+            }
+  }
+            
     }
 
     public void updatePathing() {
@@ -60,7 +65,7 @@ public class Map {
         if (!foundExit) {//will repeat until exit is found
             updatePathing();//calls itself 
         } else {
-            createExitPath(exitObject);
+            createExitPath(exitObject);//Call to find the path to the exit
         }
     }
 
@@ -105,10 +110,6 @@ public class Map {
             }
 
         }
-    }
-
-    public int getPathObjectSize() {
-        return PathObjectSize;
     }
 
     public byte getMapSize() {

@@ -15,6 +15,7 @@ public class PathProgram {
     Canvas canvas;
     private int xSize, ySize;
     Map map;
+    static final int PathObjectSize = 20;
     private JButton button;
     private JPanel guiPanel;
     private ActionHandler actionHandler = new ActionHandler();
@@ -26,8 +27,8 @@ public class PathProgram {
     }
 
     public void CreateAndShowGui() {
-        xSize = map.getPathObjectSize() * map.getMapSize() + 100;
-        ySize = map.getPathObjectSize() * map.getMapSize();
+        xSize = PathObjectSize * map.getMapSize() + 100;
+        ySize = PathObjectSize * map.getMapSize();
         JFrame frame = new JFrame("Shit Pather");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         canvas = new Canvas();
@@ -45,6 +46,7 @@ public class PathProgram {
         button.setText("Start");
         button.addActionListener(actionHandler);
         guiPanel.add(button);
+        
         frame.pack();
     }
 
@@ -53,6 +55,10 @@ public class PathProgram {
     }
 
     public void run() {
+        while(true){
+        map.draw(canvas.getGraphics());
+        
+        }
 
     }
 
