@@ -19,7 +19,7 @@ public class Map {
         mapSize = 20;
         map = new PathObject[mapSize][mapSize];
         map[5][5] = new PathObject((byte) 5, (byte) 5, (byte) 0, (byte) 0);
-        map[10][10] = new PathObject((byte) 10, (byte) 10, (byte) 3, (byte) 5);
+        map[10][10] = new PathObject((byte) 10, (byte) 10, (byte) 2, (byte) 5);
     }
 
     public void draw(Graphics g) {
@@ -75,7 +75,9 @@ public class Map {
         if (!foundExit) {//will repeat until exit is found
             updatePathing();//calls itself 
         } else {
+              System.out.println("THAH got em!");
             createExitPath(exitObject);//Call to find the path to the exit
+          
         }
     }
 
