@@ -62,6 +62,7 @@ public class PathProgram {
     public void run() {
         while(true){
         map.draw(canvas.getGraphics());
+        map.updatePathing();
 
         
         }

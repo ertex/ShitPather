@@ -18,14 +18,15 @@ public class Map {
     public Map() {
         mapSize = 20;
         map = new PathObject[mapSize][mapSize];
-        map[5][5] = new PathObject((byte)5, (byte)5, (byte) 0, (byte) 0);
-        map[10][10] = new PathObject((byte)10, (byte)10, (byte) 3, (byte) 5);
+        map[5][5] = new PathObject((byte) 5, (byte) 5, (byte) 0, (byte) 0);
+        map[10][10] = new PathObject((byte) 10, (byte) 10, (byte) 3, (byte) 5);
     }
 
     public void draw(Graphics g) {
         for (byte x = 0; x < mapSize; x++) {
             for (byte y = 0; y < mapSize; y++) {
                 if (map[x][y] != null) {
+                    System.out.println("This is a debug message10203");
                     map[x][y].draw(g);
                 }
             }
@@ -34,35 +35,40 @@ public class Map {
     }
 
     public void updatePathing() {
+        System.out.println("This is a debug message");
         for (byte x = 0; x < mapSize; x++) {
             for (byte y = 0; y < mapSize; y++) {
-                if (map[x][y].getActive()) {//only updates the active objects
+                if (map[x][y] != null) {
+                    if (map[x][y].getActive()) {//only updates the active objects
+                        System.out.println("This is a debug e");
 
-                    if (map[x + 1][y].getType() == 0) {//the following if statements checks to see if there are empty spaces next to it, if so, paste a new object
-                        map[x + 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
-                    } else if (map[x + 1][y].getType() == 2) {
-                        foundExit = true;
-                        exitObject = map[x + 1][y];
+                        if (map[x + 1][y] != null) {//the following if statements checks to see if there are empty spaces next to it, if so, pastes a new object
+                            map[x + 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                        } else if (map[x + 1][y].getType() == 2) {
+                            foundExit = true;
+                            exitObject = map[x + 1][y];
+                        }
+                        if (map[x - 1][y] != null) {
+                            map[x - 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                        } else if (map[x - 1][y].getType() == 2) {
+                            foundExit = true;
+                            exitObject = map[x + 1][y];
+                        }
+                        if (map[x][y + 1] != null) {
+                            map[x][y + 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                        } else if (map[x][y + 1].getType() == 2) {
+                            foundExit = true;
+                            exitObject = map[x][y + 1];
+                        }
+                        if (map[x][y - 1] != null) {
+                            map[x][y - 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                        } else if (map[x][y - 1].getType() == 2) {
+                            foundExit = true;
+                            exitObject = map[x][y - 1];
+                        }
                     }
-                    if (map[x - 1][y].getType() == 0) {
-                        map[x - 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
-                    } else if (map[x - 1][y].getType() == 2) {
-                        foundExit = true;
-                        exitObject = map[x + 1][y];
-                    }
-                    if (map[x][y + 1].getType() == 0) {
-                        map[x][y + 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
-                    } else if (map[x][y + 1].getType() == 2) {
-                        foundExit = true;
-                        exitObject = map[x][y + 1];
-                    }
-                    if (map[x][y - 1].getType() == 0) {
-                        map[x][y - 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
-                    } else if (map[x][y - 1].getType() == 2) {
-                        foundExit = true;
-                        exitObject = map[x][y - 1];
-                    }
-                    map[x][y].setState(false);
+                    map[x][y].update();//changes the active(used) objects and the newly placed objects to true.
+                    //the newly placed are set to active = false by default so they don't get triggered while it's itterating
                 }
             }
         }

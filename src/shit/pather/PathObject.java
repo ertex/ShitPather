@@ -7,7 +7,7 @@ public class PathObject {
 // PathObject and shit.pather belongs to David Johansson Te2
 
     private int x, y;
-    private boolean active;
+    private boolean active,updateToActive;
     private Color color;
     private byte type, lenght;
 
@@ -16,9 +16,21 @@ public class PathObject {
         this.y = y;
         this.type = type;
         this.lenght = lenght;
-        active = true;
+        active = false;
+        updateToActive = true;//the PathObject need to have on eitteration lag behind in order 
         updateColor();
 
+    }
+    
+    public void update(){//updates the state of the object and making it behave correctly in the array
+        if(active){
+        active = false;
+        }
+    if(updateToActive){
+        active = true;
+        updateToActive = false;
+        updateColor();
+    }
     }
 
     public void checkSurroundings() {
