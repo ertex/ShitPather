@@ -36,31 +36,31 @@ public class Map {
 
     public void updatePathing() {
         System.out.println("This is a debug message");
-        for (byte x = 0; x < mapSize; x++) {
-            for (byte y = 0; y < mapSize; y++) {
+        for (byte x = 1; x < mapSize-1; x++) {
+            for (byte y = 1; y < mapSize-1; y++) {
                 if (map[x][y] != null) {
                     if (map[x][y].getActive()) {//only updates the active objects
-                        System.out.println("This is a debug e");
 
-                        if (map[x + 1][y] != null) {//the following if statements checks to see if there are empty spaces next to it, if so, pastes a new object
+
+                        if (map[x + 1][y] == null) {//the following if statements checks to see if there are empty spaces next to it, if so, pastes a new object
                             map[x + 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x + 1][y].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x + 1][y];
                         }
-                        if (map[x - 1][y] != null) {
+                        if (map[x - 1][y] == null) {
                             map[x - 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x - 1][y].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x + 1][y];
                         }
-                        if (map[x][y + 1] != null) {
+                        if (map[x][y + 1] == null) {
                             map[x][y + 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x][y + 1].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x][y + 1];
                         }
-                        if (map[x][y - 1] != null) {
+                        if (map[x][y - 1]  == null) {
                             map[x][y - 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x][y - 1].getType() == 2) {
                             foundExit = true;
