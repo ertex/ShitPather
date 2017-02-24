@@ -97,40 +97,42 @@ public class Map {
             PathObject o = exit;
             x = exit.getX();
             y = exit.getY();
+            exitPath = new byte[o.getLenght()][2]; //cerates a exitpath array the same size as how many needs to be fitted into it
             while (o.getlenght() > 0) {
+
                 x = o.getX();
                 y = o.getY();
                 if (map[x + 1][y] != null) {//makes sure no nullpointers get into the system
                     if (map[x + 1][y].getlenght() < o.getlenght()) {//checks if any of the nearby pathobjects are closer to the origin, if so, saves the location ...
                         //of the object so It can be displayed as a path later on, also saves the object into "o" so it ccan check whst is closer around itself
                         o = map[x + 1][y];
-                        System.out.println(x + " : " + y);
-                        exitPath[o.getLenght()][0] = (byte) x;
+                        System.out.println(x + " :1: " + y);
+                        exitPath[o.getLenght()][0] = (byte)( x+1);
                         exitPath[o.getLenght()][1] = (byte) y;
                     }
                 }
                 if (map[x - 1][y] != null) {
                     if (map[x - 1][y].getlenght() < o.getlenght()) {
                         o = map[x - 1][y];
-                        System.out.println(x + " : " + y);
-                        exitPath[o.getLenght()][0] = (byte) x;
+                        System.out.println(x + ":2 : " + y);
+                        exitPath[o.getLenght()][0] = (byte) (x-1);
                         exitPath[o.getLenght()][1] = (byte) y;
                     }
                 }
                 if (map[x][y + 1] != null) {
                     if (map[x][y + 1].getlenght() < o.getlenght()) {
                         o = map[x][y + 1];
-                        System.out.println(x + " : " + y);
+                        System.out.println(x + " :3: " + y);
                         exitPath[o.getLenght()][0] = (byte) x;
-                        exitPath[o.getLenght()][1] = (byte) y;
+                        exitPath[o.getLenght()][1] = (byte) (y+1);
                     }
                 }
                 if (map[x][y - 1] != null) {
                     if (map[x][y - 1].getlenght() < o.getlenght()) {
                         o = map[x][y - 1];
-                        System.out.println(x + " : " + y);
+                        System.out.println(x + ": 4: " + y);
                         exitPath[o.getLenght()][0] = (byte) x;
-                        exitPath[o.getLenght()][1] = (byte) y;
+                        exitPath[o.getLenght()][1] = (byte) (y-1);
                     }
                 }
             }
