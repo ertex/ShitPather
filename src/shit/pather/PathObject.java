@@ -11,13 +11,22 @@ public class PathObject {
     private Color color;
     private byte type, lenght;
 
-    public PathObject(byte x, byte y, byte type, byte lenght) {
+    public PathObject(byte x, byte y, byte lenght) { //"Regular" pathobject used to find the exit
         this.x = x;//the position in the grid object, not on the screen
         this.y = y;
-        this.type = type;
+        type = 1;
         this.lenght = lenght;
         active = false;
         updateToActive = true;//the PathObject need to have on eitteration lag behind in order 
+        updateColor();
+
+    }
+        public PathObject(byte x, byte y) { //The object that is the exit
+        this.x = x;//the position in the grid object, not on the screen
+        this.y = y;
+        type = 2;
+        lenght = 127;//capped out since this is the last object and in findExit() it looks for the previous object
+        active = false;
         updateColor();
 
     }
@@ -49,7 +58,9 @@ public class PathObject {
 
     public void draw(Graphics g) {
         g.setColor(color);
-        g.drawRect(x * PathProgram.PathObjectSize, y * PathProgram.PathObjectSize, PathProgram.PathObjectSize, PathProgram.PathObjectSize);
+        g.fillRect(x * PathProgram.PathObjectSize, y * PathProgram.PathObjectSize, PathProgram.PathObjectSize, PathProgram.PathObjectSize);
+        g.setColor(color.WHITE);
+        g.drawString(""+lenght, x*PathProgram.PathObjectSize+PathProgram.PathObjectSize/2-10, y*PathProgram.PathObjectSize+PathProgram.PathObjectSize/2);
     }
 
     public void setType(byte type) {

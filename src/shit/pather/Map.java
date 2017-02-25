@@ -16,17 +16,17 @@ public class Map {
     private PathObject exitObject;
 
     public Map() {
-        mapSize = 20;
+        mapSize = 40;
         map = new PathObject[mapSize][mapSize];
-        map[5][5] = new PathObject((byte) 5, (byte) 5, (byte) 0, (byte) 0);
-        map[10][10] = new PathObject((byte) 10, (byte) 10, (byte) 2, (byte) 5);
+        map[5][5] = new PathObject((byte) 5, (byte) 5, (byte) 0);
+        map[20][20] = new PathObject((byte) 20, (byte) 20);//Exit
     }
 
     public void draw(Graphics g) {
         for (byte x = 0; x < mapSize; x++) {
             for (byte y = 0; y < mapSize; y++) {
                 if (map[x][y] != null) {
-                    System.out.println("This is a debug message10203");
+
                     map[x][y].draw(g);
                 }
             }
@@ -35,6 +35,7 @@ public class Map {
     }
 
     public void updatePathing() {
+        if(!foundExit){
         System.out.println("This is a debug message");
         for (byte x = 1; x < mapSize - 1; x++) {
             for (byte y = 1; y < mapSize - 1; y++) {
@@ -42,25 +43,25 @@ public class Map {
                     if (map[x][y].getActive()) {//only updates the active objects
 
                         if (map[x + 1][y] == null) {//the following if statements checks to see if there are empty spaces next to it, if so, pastes a new object
-                            map[x + 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                            map[x + 1][y] = new PathObject(x, y, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x + 1][y].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x + 1][y];
                         }
                         if (map[x - 1][y] == null) {
-                            map[x - 1][y] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                            map[x - 1][y] = new PathObject(x, y, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x - 1][y].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x + 1][y];
                         }
                         if (map[x][y + 1] == null) {
-                            map[x][y + 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                            map[x][y + 1] = new PathObject(x, y, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x][y + 1].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x][y + 1];
                         }
                         if (map[x][y - 1] == null) {
-                            map[x][y - 1] = new PathObject(x, y, (byte) 1, (byte) (map[x][y].getLenght() + 1));
+                            map[x][y - 1] = new PathObject(x, y, (byte) (map[x][y].getLenght() + 1));
                         } else if (map[x][y - 1].getType() == 2) {
                             foundExit = true;
                             exitObject = map[x][y - 1];
@@ -75,9 +76,10 @@ public class Map {
             updatePathing();//calls itself 
         } else {
             System.out.println("THAH got em!");
-            createExitPath(exitObject);//Call to find the path to the exit
+           // createExitPath(exitObject);//Call to find the path to the exit
 
         }
+    }
     }
 
     public void changeMap(byte x, byte y, byte type) {
@@ -97,13 +99,16 @@ public class Map {
             PathObject o = exit;
             x = exit.getX();
             y = exit.getY();
+            System.out.println("the exit is at"+x+" : "+y);
             exitPath = new byte[o.getLenght()][2]; //cerates a exitpath array the same size as how many needs to be fitted into it
             while (o.getlenght() > 0) {
 
                 x = o.getX();
                 y = o.getY();
+               int L = o.getlenght();
                 if (map[x + 1][y] != null) {//makes sure no nullpointers get into the system
-                    if (map[x + 1][y].getlenght() < o.getlenght()) {//checks if any of the nearby pathobjects are closer to the origin, if so, saves the location ...
+                     System.out.println("is : "+map[x + 1][y].getlenght()+" < "+L);
+                    if (map[x + 1][y].getlenght() < L) {//checks if any of the nearby pathobjects are closer to the origin, if so, saves the location ...
                         //of the object so It can be displayed as a path later on, also saves the object into "o" so it ccan check whst is closer around itself
                         o = map[x + 1][y];
                         System.out.println(x + " :1: " + y);
@@ -112,7 +117,8 @@ public class Map {
                     }
                 }
                 if (map[x - 1][y] != null) {
-                    if (map[x - 1][y].getlenght() < o.getlenght()) {
+                    System.out.println("is : "+map[x - 1][y].getlenght()+" < "+L);
+                    if (map[x - 1][y].getlenght() < L) {
                         o = map[x - 1][y];
                         System.out.println(x + ":2 : " + y);
                         exitPath[o.getLenght()][0] = (byte) (x-1);
@@ -120,7 +126,8 @@ public class Map {
                     }
                 }
                 if (map[x][y + 1] != null) {
-                    if (map[x][y + 1].getlenght() < o.getlenght()) {
+                    System.out.println("is : "+map[x][y+1].getlenght()+" < "+L);
+                    if (map[x][y + 1].getlenght() < L) {
                         o = map[x][y + 1];
                         System.out.println(x + " :3: " + y);
                         exitPath[o.getLenght()][0] = (byte) x;
@@ -128,7 +135,8 @@ public class Map {
                     }
                 }
                 if (map[x][y - 1] != null) {
-                    if (map[x][y - 1].getlenght() < o.getlenght()) {
+                    System.out.println("is : "+map[x][y-1].getlenght()+" < "+L);
+                    if (map[x][y - 1].getlenght() < L) {
                         o = map[x][y - 1];
                         System.out.println(x + ": 4: " + y);
                         exitPath[o.getLenght()][0] = (byte) x;

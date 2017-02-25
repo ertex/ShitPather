@@ -16,7 +16,7 @@ public class PathProgram {
     Canvas canvas;
     private int xSize, ySize;
     Map map;
-    static final int PathObjectSize = 20;
+    static final int PathObjectSize = 30;
     private JButton button;
     private JPanel guiPanel;
     private ActionHandler actionHandler = new ActionHandler();
