@@ -7,7 +7,7 @@ public class PathObject {
 // PathObject and shit.pather belongs to David Johansson Te2
 
     private int x, y;
-    private boolean active,updateToActive;
+    private boolean active, updateToActive;
     private Color color;
     private byte type, lenght;
 
@@ -21,7 +21,8 @@ public class PathObject {
         updateColor();
 
     }
-        public PathObject(byte x, byte y) { //The object that is the exit
+
+    public PathObject(byte x, byte y) { //The object that is the exit
         this.x = x;//the position in the grid object, not on the screen
         this.y = y;
         type = 2;
@@ -30,16 +31,16 @@ public class PathObject {
         updateColor();
 
     }
-    
-    public void update(){//updates the state of the object and making it behave correctly in the array
-        if(active){
-        active = false;
+
+    public void update() {//updates the state of the object and making it behave correctly in the array
+        if (active) {
+            active = false;
         }
-    if(updateToActive){
-        active = true;
-        updateToActive = false;
-        updateColor();
-    }
+        if (updateToActive) {
+            active = true;
+            updateToActive = false;
+            updateColor();
+        }
     }
 
     public void checkSurroundings() {
@@ -60,7 +61,7 @@ public class PathObject {
         g.setColor(color);
         g.fillRect(x * PathProgram.PathObjectSize, y * PathProgram.PathObjectSize, PathProgram.PathObjectSize, PathProgram.PathObjectSize);
         g.setColor(color.WHITE);
-        g.drawString(""+lenght, x*PathProgram.PathObjectSize+PathProgram.PathObjectSize/2-10, y*PathProgram.PathObjectSize+PathProgram.PathObjectSize/2);
+        g.drawString("" + lenght, x * PathProgram.PathObjectSize + PathProgram.PathObjectSize / 2 - 10, y * PathProgram.PathObjectSize + PathProgram.PathObjectSize / 2);
     }
 
     public void setType(byte type) {
