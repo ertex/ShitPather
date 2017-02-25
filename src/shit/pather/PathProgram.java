@@ -3,6 +3,7 @@ package shit.pather;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,16 +11,20 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.BoxLayout;
 
-public class PathProgram {
+public class PathProgram implements MouseListener {
 
     Canvas canvas;
-    private int xSize, ySize;
-    Map map;
-    static final int PathObjectSize = 30;
-    private JButton button;
+    private int xSize, ySize,guiWidth;
+    private Map map;
+    private byte selectedType;
+    static final int PathObjectSize = 10;
+    private JButton button1, button2, button3;
     private JPanel guiPanel;
     private ActionHandler actionHandler = new ActionHandler();
+    private boolean pathing ;
 // PathProgram and shit.pather belongs to David Johansson Te2
 
     public PathProgram() {
@@ -38,21 +43,36 @@ public class PathProgram {
         canvas.setSize(xSize, ySize);
         canvas.setVisible(true);
         canvas.setBackground(Color.blue);
-       
+
         frame.setVisible(true);
-        frame.setSize(xSize+100, ySize+100);
+        frame.setSize(xSize + 100, ySize + 100);
 
         guiPanel = new JPanel();
         guiPanel.setSize(100, ySize);
+        guiPanel.setLayout(new BoxLayout(guiPanel, 1));
         frame.add(guiPanel, BorderLayout.WEST);
-        frame.add(canvas,BorderLayout.EAST);
+        frame.add(canvas, BorderLayout.EAST);
 
-        button = new JButton("Start"); // the button for high attacks
-        button.setVisible(true);
-        button.setText("Start");
-        button.addActionListener(actionHandler);
-        guiPanel.add(button);
-       
+        button1 = new JButton("Start");
+        button1.setVisible(true);
+        button1.setText("Start");
+        button1.addActionListener(actionHandler);
+        guiPanel.add(button1);
+
+        button2 = new JButton("Reset");
+        button2.setVisible(true);
+        button2.setText("Reset");
+        button2.addActionListener(actionHandler);
+        guiPanel.add(button2);
+
+        button3 = new JButton("ChangeType");
+        button3.setVisible(true);
+        button3.setText("Change XXX");
+        button3.addActionListener(actionHandler);
+        guiPanel.add(button3);
+
+        guiWidth = guiPanel.getWidth();
+
     }
 
     public void draw(Graphics g) {
@@ -60,13 +80,32 @@ public class PathProgram {
     }
 
     public void run() {
-        while(true){
-        map.draw(canvas.getGraphics());
-        map.updatePathing();
+        while (true) {
+            map.draw(canvas.getGraphics());
+            
 
-        
         }
 
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("CLICK!");
+        if(!pathing){
+        map.changeMap((int)((e.getX()-guiWidth)/map.getMapSize()),(int)(e.getY()/map.getMapSize()),selectedType);    
+        }
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
     }
 
     private class ActionHandler implements ActionListener//this listens if a action is performed and exceutes the linked action 
@@ -79,7 +118,19 @@ public class PathProgram {
                 String cmd = e.getActionCommand();
                 switch (cmd) {
                     case "Start":
-                        System.out.println("This is a debug message");
+                        pathing = true;
+                        
+                        System.out.println("Start");
+                        map.updatePathing();
+                        break;
+
+                    case "Reset":
+                        pathing = false;
+                        System.out.println("Reset");
+                        break;
+
+                    case "ChangeType":
+                        System.out.println("ChangeType");
                         break;
 
                 }

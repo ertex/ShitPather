@@ -6,12 +6,12 @@ import java.awt.Graphics;
 public class PathObject {
 // PathObject and shit.pather belongs to David Johansson Te2
 
-    private int x, y;
+    private int x, y,lenght;
     private boolean active, updateToActive;
     private Color color;
-    private byte type, lenght;
+    private byte type;
 
-    public PathObject(byte x, byte y, byte lenght) { //"Regular" pathobject used to find the exit
+    public PathObject(int x, int y, int lenght) { //"Regular" pathobject used to find the exit
         this.x = x;//the position in the grid object, not on the screen
         this.y = y;
         type = 1;
@@ -26,7 +26,7 @@ public class PathObject {
         this.x = x;//the position in the grid object, not on the screen
         this.y = y;
         type = 2;
-        lenght = 127;//capped out since this is the last object and in findExit() it looks for the previous object
+        lenght = 13370;//really high, out since this is the last object and in findExit() it looks for the previous object
         active = false;
         updateColor();
 
@@ -68,7 +68,7 @@ public class PathObject {
         this.type = type;
     }
 
-    public byte getlenght() {
+    public int getLenght() {
         return lenght;
     }
 
@@ -90,9 +90,5 @@ public class PathObject {
 
     public int getY() {
         return y;
-    }
-
-    public byte getLenght() {
-        return lenght;
     }
 }
