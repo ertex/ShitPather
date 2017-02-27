@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class PathObject {
 // PathObject and shit.pather belongs to David Johansson Te2
 
-    private int x, y,lenght;
+    private int x, y, lenght;
     private boolean active, updateToActive;
     private Color color;
     private byte type;
@@ -22,7 +22,18 @@ public class PathObject {
 
     }
 
-    public PathObject(byte x, byte y) { //The object that is the exit
+    public PathObject(int x, int y, boolean Static) {//If it is a wall
+        if (Static) {
+            this.x = x;//the position in the grid object, not on the screen
+            this.y = y;
+            type = 3;
+            active = false;
+            updateColor();
+
+        }
+    }
+
+    public PathObject(int x, int y) { //The object that is the exit
         this.x = x;//the position in the grid object, not on the screen
         this.y = y;
         type = 2;
@@ -49,11 +60,13 @@ public class PathObject {
 
     public void updateColor() {
         if (type == 0) {
-            color = Color.WHITE;
+            color = Color.YELLOW;
         } else if (type == 1) {
             color = Color.BLACK;
         } else if (type == 2) {
             color = Color.RED;
+        } else if (type == 3) { //wall
+            color = Color.BLUE;
         }
     }
 

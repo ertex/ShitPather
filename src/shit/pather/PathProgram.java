@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,22 +13,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferStrategy;
 import javax.swing.BoxLayout;
 
 public class PathProgram implements MouseListener {
 
     Canvas canvas;
-    private int xSize, ySize,guiWidth;
+    private int xSize, ySize, guiWidth;
     private Map map;
     private byte selectedType;
-    static final int PathObjectSize = 10;
+    static final int PathObjectSize = 20;
     private JButton button1, button2, button3;
     private JPanel guiPanel;
     private ActionHandler actionHandler = new ActionHandler();
-    private boolean pathing ;
+    private boolean pathing;
+    private BufferStrategy bs;
+    Graphics g;
 // PathProgram and shit.pather belongs to David Johansson Te2
 
     public PathProgram() {
+        selectedType = 3;
         map = new Map(); //This needs to be before CreateAndShowGui(), since it's using methods from it to make the window
         CreateAndShowGui();
         run();
@@ -39,10 +44,12 @@ public class PathProgram implements MouseListener {
         System.out.println(xSize);
         JFrame frame = new JFrame("Shit Pather");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         canvas = new Canvas();
         canvas.setSize(xSize, ySize);
         canvas.setVisible(true);
-        canvas.setBackground(Color.blue);
+ 
+        //     canvas.setBackground(Color.blue);
 
         frame.setVisible(true);
         frame.setSize(xSize + 100, ySize + 100);
@@ -73,36 +80,61 @@ public class PathProgram implements MouseListener {
 
         guiWidth = guiPanel.getWidth();
 
-    }
-
-    public void draw(Graphics g) {
+        canvas.addMouseListener(this);
+               canvas.createBufferStrategy(2);//creates double buffering in canvas object
+        bs = canvas.getBufferStrategy();
 
     }
 
     public void run() {
         while (true) {
-            map.draw(canvas.getGraphics());
-            
+
+            paintComponents();
 
         }
 
+    }
+
+    public void paintComponents() {
+        g = (Graphics2D) bs.getDrawGraphics();
+        g.clearRect(0, 0, xSize, ySize); //clears the canvas
+        map.draw(g);
+
+        if (!bs.contentsLost()) {
+            bs.show();
+        }
+    }
+
+    public void cycleType() {
+        if (selectedType == 0) {
+            selectedType = 1;
+        } else if (selectedType == 1) {
+            selectedType = 2;
+        } else if (selectedType == 2) {
+            selectedType = 3;
+        } else if (selectedType == 3) {
+            selectedType = 0;
+        }
     }
 
     public void mouseClicked(MouseEvent e) {
-        System.out.println("CLICK!");
-        if(!pathing){
-        map.changeMap((int)((e.getX()-guiWidth)/map.getMapSize()),(int)(e.getY()/map.getMapSize()),selectedType);    
-        }
 
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println("CLICK!");
+        if (!pathing) {
+            map.changeMap((int) ((e.getX()) / PathObjectSize), (int) (e.getY() / PathObjectSize), selectedType);
+        }
     }
 
     public void mouseReleased(MouseEvent e) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
+
     }
 
     public void mouseExited(MouseEvent e) {
@@ -119,7 +151,7 @@ public class PathProgram implements MouseListener {
                 switch (cmd) {
                     case "Start":
                         pathing = true;
-                        
+
                         System.out.println("Start");
                         map.updatePathing();
                         break;
@@ -131,6 +163,7 @@ public class PathProgram implements MouseListener {
 
                     case "ChangeType":
                         System.out.println("ChangeType");
+                        cycleType();
                         break;
 
                 }
