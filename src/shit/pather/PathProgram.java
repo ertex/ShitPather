@@ -74,7 +74,7 @@ public class PathProgram implements MouseListener {
 
         button3 = new JButton("ChangeType");
         button3.setVisible(true);
-        button3.setText("Change XXX");
+        button3.setText("ChangeType");
         button3.addActionListener(actionHandler);
         guiPanel.add(button3);
 

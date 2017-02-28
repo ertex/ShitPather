@@ -73,8 +73,10 @@ public class PathObject {
     public void draw(Graphics g) {
         g.setColor(color);
         g.fillRect(x * PathProgram.PathObjectSize, y * PathProgram.PathObjectSize, PathProgram.PathObjectSize, PathProgram.PathObjectSize);
-        g.setColor(color.WHITE);
-        g.drawString("" + lenght, x * PathProgram.PathObjectSize + PathProgram.PathObjectSize / 2 - 10, y * PathProgram.PathObjectSize + PathProgram.PathObjectSize / 2);
+        if (type == 1) {
+            g.setColor(color.WHITE);
+            g.drawString("" + lenght, x * PathProgram.PathObjectSize + PathProgram.PathObjectSize / 2 - 10, y * PathProgram.PathObjectSize + PathProgram.PathObjectSize / 2);
+        }
     }
 
     public void setType(byte type) {
