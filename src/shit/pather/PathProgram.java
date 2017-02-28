@@ -106,14 +106,13 @@ public class PathProgram implements MouseListener {
     }
 
     public void cycleType() {
-        if (selectedType == 0) {
-            selectedType = 1;
-        } else if (selectedType == 1) {
+    
+         if (selectedType == 1) {
             selectedType = 2;
         } else if (selectedType == 2) {
             selectedType = 3;
         } else if (selectedType == 3) {
-            selectedType = 0;
+            selectedType = 1;
         }
     }
 
@@ -125,6 +124,7 @@ public class PathProgram implements MouseListener {
     public void mousePressed(MouseEvent e) {
         System.out.println("CLICK!");
         if (!pathing) {
+            
             map.changeMap((int) ((e.getX()) / PathObjectSize), (int) (e.getY() / PathObjectSize), selectedType);
         }
     }
@@ -159,10 +159,11 @@ public class PathProgram implements MouseListener {
                     case "Reset":
                         pathing = false;
                         System.out.println("Reset");
+                        map.resetMap();
                         break;
 
                     case "ChangeType":
-                        System.out.println("ChangeType");
+                        System.out.println("ChangeType current :"+selectedType);
                         cycleType();
                         break;
 
@@ -171,7 +172,7 @@ public class PathProgram implements MouseListener {
                 ex.printStackTrace();
             }
 
-            //   }
+
         }
     }
 

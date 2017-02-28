@@ -53,32 +53,32 @@ public class Map {
 
                             if (map[x + 1][y] == null) {//the following if statements checks to see if there are empty spaces next to it, if so, pastes a new object
 
-                                map[x + 1][y] = new PathObject(x+1, y, map[x][y].getLenght() + 1);
+                                map[x + 1][y] = new PathObject(x + 1, y, map[x][y].getLenght() + 1);
                             } else if (map[x + 1][y].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x + 1][y];
-                                exitObject.setLenght(map[x][y].getLenght()+1);
+                                exitObject.setLenght(map[x][y].getLenght() + 1);
                             }
                             if (map[x - 1][y] == null) {
-                                map[x - 1][y] = new PathObject(x-1, y, map[x][y].getLenght() + 1);
+                                map[x - 1][y] = new PathObject(x - 1, y, map[x][y].getLenght() + 1);
                             } else if (map[x - 1][y].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x + 1][y];
-                                exitObject.setLenght(map[x][y].getLenght()+1);
+                                exitObject.setLenght(map[x][y].getLenght() + 1);
                             }
                             if (map[x][y + 1] == null) {
-                                map[x][y + 1] = new PathObject(x, y+1, map[x][y].getLenght() + 1);
+                                map[x][y + 1] = new PathObject(x, y + 1, map[x][y].getLenght() + 1);
                             } else if (map[x][y + 1].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x][y + 1];
-                                exitObject.setLenght(map[x][y].getLenght()+1);
+                                exitObject.setLenght(map[x][y].getLenght() + 1);
                             }
                             if (map[x][y - 1] == null) {
-                                map[x][y - 1] = new PathObject(x, y-1, map[x][y].getLenght() + 1);
+                                map[x][y - 1] = new PathObject(x, y - 1, map[x][y].getLenght() + 1);
                             } else if (map[x][y - 1].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x][y - 1];
-                                exitObject.setLenght(map[x][y].getLenght()+1);
+                                exitObject.setLenght(map[x][y].getLenght() + 1);
                             }
                         }
                         map[x][y].update();//changes the active(used) objects and the newly placed objects to true.
@@ -99,12 +99,23 @@ public class Map {
     public void changeMap(int x, int y, byte type) {
         if (map[x][y] != null) {
             map[x][y].setType(type);
+            map[x][y].updateColor();
         } else if (type == 3) {
             map[x][y] = new PathObject(x, y, true);
+        } else if (type == 2) {
+            map[x][y] = new PathObject(x, y);
+        }
+        else if (type ==1){
+            map[x][y] = new PathObject(x,y, 0);
         }
     }
 
     public void resetMap() {
+        for (int x = 0; x < mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                map[x][y] = null;
+            }
+        }
 
     }
 
@@ -127,7 +138,7 @@ public class Map {
     public void createExitPath(PathObject exit) {
         if (foundExit) { //security so it can oly be accesible when the exit has been found
             PathObject o = exit;
-            System.out.println("size... "+o.getLenght());
+            System.out.println("size... " + o.getLenght());
             x = exit.getX();
             y = exit.getY();
             System.out.println("the exit is at" + x + " : " + y);
@@ -172,7 +183,7 @@ public class Map {
         for (int x = exitObject.getLenght(); x > 1; x--) {
             map[exitPath[x][0]][exitPath[x][1]].setType((byte) 0);
             map[exitPath[x][0]][exitPath[x][1]].updateColor();
-            System.out.println("Lenght"+map[exitPath[x][0]][exitPath[x][1]].getLenght());
+            System.out.println("Lenght" + map[exitPath[x][0]][exitPath[x][1]].getLenght());
         }
     }
 
