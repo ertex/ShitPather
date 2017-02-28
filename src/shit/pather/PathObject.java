@@ -82,6 +82,10 @@ public class PathObject {
     public void setType(byte type) {
         this.type = type;
     }
+    
+    public void setLenght(int l){
+    this.lenght = l;
+    }
 
     public int getLenght() {
         return lenght;

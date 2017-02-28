@@ -53,28 +53,32 @@ public class Map {
 
                             if (map[x + 1][y] == null) {//the following if statements checks to see if there are empty spaces next to it, if so, pastes a new object
 
-                                map[x + 1][y] = new PathObject(x, y, map[x][y].getLenght() + 1);
+                                map[x + 1][y] = new PathObject(x+1, y, map[x][y].getLenght() + 1);
                             } else if (map[x + 1][y].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x + 1][y];
+                                exitObject.setLenght(map[x][y].getLenght()+1);
                             }
                             if (map[x - 1][y] == null) {
-                                map[x - 1][y] = new PathObject(x, y, map[x][y].getLenght() + 1);
+                                map[x - 1][y] = new PathObject(x-1, y, map[x][y].getLenght() + 1);
                             } else if (map[x - 1][y].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x + 1][y];
+                                exitObject.setLenght(map[x][y].getLenght()+1);
                             }
                             if (map[x][y + 1] == null) {
-                                map[x][y + 1] = new PathObject(x, y, map[x][y].getLenght() + 1);
+                                map[x][y + 1] = new PathObject(x, y+1, map[x][y].getLenght() + 1);
                             } else if (map[x][y + 1].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x][y + 1];
+                                exitObject.setLenght(map[x][y].getLenght()+1);
                             }
                             if (map[x][y - 1] == null) {
-                                map[x][y - 1] = new PathObject(x, y, map[x][y].getLenght() + 1);
+                                map[x][y - 1] = new PathObject(x, y-1, map[x][y].getLenght() + 1);
                             } else if (map[x][y - 1].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x][y - 1];
+                                exitObject.setLenght(map[x][y].getLenght()+1);
                             }
                         }
                         map[x][y].update();//changes the active(used) objects and the newly placed objects to true.
@@ -123,6 +127,7 @@ public class Map {
     public void createExitPath(PathObject exit) {
         if (foundExit) { //security so it can oly be accesible when the exit has been found
             PathObject o = exit;
+            System.out.println("size... "+o.getLenght());
             x = exit.getX();
             y = exit.getY();
             System.out.println("the exit is at" + x + " : " + y);
@@ -160,6 +165,7 @@ public class Map {
             }
             System.out.println("The Path Has been found!");
         }
+        //showPath();
     }
 
     public void showPath() {
