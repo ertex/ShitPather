@@ -57,28 +57,28 @@ public class Map {
                             } else if (map[x + 1][y].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x + 1][y];
-                                exitObject.setLenght(map[x][y].getLenght() + 1);
+                                exitObject.setLenght(map[x+1][y].getLenght() + 1);
                             }
                             if (map[x - 1][y] == null) {
                                 map[x - 1][y] = new PathObject(x - 1, y, map[x][y].getLenght() + 1);
                             } else if (map[x - 1][y].getType() == 2) {
                                 foundExit = true;
-                                exitObject = map[x + 1][y];
-                                exitObject.setLenght(map[x][y].getLenght() + 1);
+                                exitObject = map[x +-1][y];
+                                exitObject.setLenght(map[x-1][y].getLenght() + 1);
                             }
                             if (map[x][y + 1] == null) {
                                 map[x][y + 1] = new PathObject(x, y + 1, map[x][y].getLenght() + 1);
                             } else if (map[x][y + 1].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x][y + 1];
-                                exitObject.setLenght(map[x][y].getLenght() + 1);
+                                exitObject.setLenght(map[x][y+1].getLenght() + 1);
                             }
                             if (map[x][y - 1] == null) {
                                 map[x][y - 1] = new PathObject(x, y - 1, map[x][y].getLenght() + 1);
                             } else if (map[x][y - 1].getType() == 2) {
                                 foundExit = true;
                                 exitObject = map[x][y - 1];
-                                exitObject.setLenght(map[x][y].getLenght() + 1);
+                                exitObject.setLenght(map[x][y-1].getLenght() + 1);
                             }
                         }
                         map[x][y].update();//changes the active(used) objects and the newly placed objects to true.
