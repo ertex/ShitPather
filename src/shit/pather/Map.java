@@ -104,9 +104,8 @@ public class Map {
             map[x][y] = new PathObject(x, y, true);
         } else if (type == 2) {
             map[x][y] = new PathObject(x, y);
-        }
-        else if (type ==1){
-            map[x][y] = new PathObject(x,y, 0);
+        } else if (type == 1) {
+            map[x][y] = new PathObject(x, y, 0);
         }
     }
 
@@ -116,14 +115,14 @@ public class Map {
                 map[x][y] = null;
             }
         }
-
+        foundExit = false;
     }
 
-    public PathObject CompareObject(int x, int y, PathObject o, int L) { //Terrible name
+    public PathObject CompareObject(int x, int y, int L) { //Terrible name
         if (map[x][y] != null) {
             //   System.out.println("is : "+map[x - 1][y].getlenght()+" < "+L);
-            if (map[x][y].getLenght() < L & map[x - 1][y].getType() == 1) {
-                o = map[x - 1][y];
+            if (map[x][y].getLenght() < L & map[x][y].getType() == 1) {
+               PathObject o = map[x - 1][y];
 
                 System.out.println(x + ":" + y);
                 exitPath[o.getLenght()][0] = x;//saves it in an array
@@ -152,27 +151,34 @@ public class Map {
                 y = o.getY();
                 int L = o.getLenght();
                 PathObject u;
+                o = null; //sets o to null, so later compareObject() will decide if it should do the later tests for it.
 
-                u = CompareObject(x + 1, y, o, L);
+                u = CompareObject(x + 1, y, L);
                 if (u != null) {
+
                     o = u;
                 }
-
-                u = CompareObject(x - 1, y, o, L);
-                if (u != null) {
-                    o = u;
+                if (o == null) {
+                    u = CompareObject(x - 1, y, L);
+                    if (u != null) {
+                        o = u;
+                    }
                 }
-
-                u = CompareObject(x, y + 1, o, L);
-                if (u != null) {
-                    o = u;
+                if (o == null) {
+                    u = CompareObject(x, y + 1, L);
+                    if (u != null) {
+                        o = u;
+                    }
                 }
-
-                u = CompareObject(x, y - 1, o, L);
-                if (u != null) {
-                    o = u;
+                if (o == null) {
+                    u = CompareObject(x, y - 1, L);
+                    if (u != null) {
+                        o = u;
+                    }
                 }
-
+                if (o == null) {
+                    System.out.println("I deem this impossible!");
+                }
             }
             System.out.println("The Path Has been found!");
         }
